@@ -1,5 +1,12 @@
 # create a new container with the latest ubuntu image
 sudo docker run --name ucontain -i -t ubuntu /bin/bash
+# OR
+sudo docker run -t -i --name userv1604 ubuntu:16.04 /bin/bash
+# OR pull a different image
+sudo docker pull fedora:21
+
+# search docker images
+sudo docker search SEARCH_TERM
 
 # start or stop the container
 sudo docker start ucontain
@@ -28,3 +35,8 @@ sudo docker run --log-driver ="syslog" --name dcontain -d ubuntu /bin/ sh -c "wh
 sudo tail -f /var/log/syslog
 # On Centos/Redhat
 sudo tail -f /var/log/messages
+
+
+# Docker Hub
+sudo docker login
+sudo docker 
