@@ -14,3 +14,17 @@ sudo docker run --name dcontain -d ubuntu /bin/sh -c "while true; do echo hello 
 
 # Check on running containers
 sudo docker ps
+
+# Check container logs for container dcontain
+sudo docker logs dcontain
+
+# View a running log
+sudo docker logs -ft dcontain
+
+# Push logging to syslog
+sudo docker run --log-driver ="syslog" --name dcontain -d ubuntu /bin/ sh -c "while true; do echo hello world; sleep 1; done"
+
+# On Ubuntu
+sudo tail -f /var/log/syslog
+# On Centos/Redhat
+sudo tail -f /var/log/messages
