@@ -1,0 +1,16 @@
+# create a new container with the latest ubuntu image
+sudo docker run --name ucontain -i -t ubuntu /bin/bash
+
+# start or stop the container
+sudo docker start ucontain
+sudo docker restart ucontain
+sudo docker stop ucontain
+
+# move back into an running container
+sudo docker attach ucontain
+
+# Daemonized container
+sudo docker run --name dcontain -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done"
+
+# Check on running containers
+sudo docker ps
