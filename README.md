@@ -98,7 +98,7 @@ To see how the specification has been applied, see the [example-readmes](example
 
 ## Maintainers
 
-[@RichardLitt](https://github.com/RichardLitt).
+[@tmontetweets](https://github.com/tmonte007).
 
 ## Contribute
 
