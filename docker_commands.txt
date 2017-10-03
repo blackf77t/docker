@@ -48,5 +48,7 @@ sudo docker images
 # Create a container from the image
 sudo docker run -d -p 80 --name basic_web tmonte007/basic_web:v1 nginx -g "daemon off;"
 
+# This makes port 80 for the contain port 80 for the host
+sudo docker run -d -p 80:80 --name basic_web tmonte007/basic_web:v1 nginx -g "daemon off;"
 
 
