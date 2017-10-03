@@ -40,3 +40,13 @@ sudo tail -f /var/log/messages
 # Docker Hub
 sudo docker login
 sudo docker 
+
+# Create a image in the directory with Dockerfile and verify the image
+sudo docker build -t="tmonte007/basic_web:v1" .
+sudo docker images
+
+# Create a container from the image
+sudo docker run -d -p 80 --name basic_web tmonte007/basic_web:v1 nginx -g "daemon off;"
+
+
+
