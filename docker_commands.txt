@@ -51,4 +51,7 @@ sudo docker run -d -p 80 --name basic_web tmonte007/basic_web:v1 nginx -g "daemo
 # This makes port 80 for the contain port 80 for the host
 sudo docker run -d -p 80:80 --name basic_web tmonte007/basic_web:v1 nginx -g "daemon off;"
 
-
+# Pushing Docker images to Docker Hub
+# You need to be in the directory that has the image
+sudo docker build -t="tmonte007/web" .
+sudo docker push tmonte007/web
