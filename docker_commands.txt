@@ -65,4 +65,27 @@ sudo docker history IMAGE
 ip addr 
 
 # This will show you the network configuration
+# add -f to only view the ip address
 sudo docker inspect IMAGE
+
+# You can create networks in docker
+# this command creates a network called app
+sudo docker network create app
+
+# This command shows the output
+sudo docker network inspect app
+
+# You can also remove networks
+sudo docker rm app
+
+# You add containers to a network with this command
+sudo docker run -d --net=app --name db jamtur01/redis
+
+# Or connect or disconnect running containers where app is the network and db2 is the container
+sudo docker network connect app db2
+sudo docker network disconnect app db2
+
+# you need dnsutils and iputils-ping to get nslookup and ping
+sudo apt-get -y install dnsutils iptutils-ping
+# dns automatically populates by name and network
+ping db.app
