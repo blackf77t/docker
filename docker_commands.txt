@@ -55,3 +55,6 @@ sudo docker run -d -p 80:80 --name basic_web tmonte007/basic_web:v1 nginx -g "da
 # You need to be in the directory that has the image
 sudo docker build -t="tmonte007/web" .
 sudo docker push tmonte007/web
+
+# Check docker history
+sudo docker history IMAGE
