@@ -58,3 +58,7 @@ sudo docker push tmonte007/web
 
 # Check docker history
 sudo docker history IMAGE
+
+# Docker has its own network interface docker0  it appears as a normal interface.
+# Docker defaults to 172.16 to 172.30 range
+ip addr 
