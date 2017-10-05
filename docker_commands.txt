@@ -61,4 +61,8 @@ sudo docker history IMAGE
 
 # Docker has its own network interface docker0  it appears as a normal interface.
 # Docker defaults to 172.16 to 172.30 range
+# You can do ipv6 with --ipv6 when you create an image
 ip addr 
+
+# This will show you the network configuration
+sudo docker inspect IMAGE
