@@ -1,95 +1,58 @@
-# create a new container with the latest ubuntu image
-# you will usually sudo docker build and then sudo docker run for most images
-sudo docker run --name ucontain -i -t ubuntu /bin/bash
-# OR
-sudo docker run -t -i --name userv1604 ubuntu:16.04 /bin/bash
-# OR pull a different image
-sudo docker pull fedora:21
-
-# search docker images
+# Images
 sudo docker search SEARCH_TERM
+sudo docker build -t="tmonte007/basic_web:v1" .
+sudo docker pull fedora:21
+sudo docker images
+# Push an image to Docker hub
+sudo docker build -t="tmonte007/web" .
+sudo docker push tmonte007/web
+sudo docker history IMAGE
+sudo docker inspect IMAGE
 
-# start, restart, or stop the container
+# Containers
+sudo docker run --name ucontain -i -t ubuntu /bin/bash
+sudo docker run -t -i --name userv1604 ubuntu:16.04 /bin/bash
+# Create a daemonized image
+sudo docker run --name dcontain -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done"
+sudo docker run -d -p 80 --name basic_web tmonte007/basic_web:v1 nginx -g "daemon off;"
+# Connect the container port 80 to the docker host port 80
+sudo docker run -d -p 80:80 --name basic_web tmonte007/basic_web:v1 nginx -g "daemon off;"
+
+# Start, restart, stop, or attach
 sudo docker start ucontain
 sudo docker restart ucontain
 sudo docker stop ucontain
-
-# move back into an running container
+sudo docker ps
 sudo docker attach ucontain
 
-# Daemonized container
-sudo docker run --name dcontain -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done"
-
-# Check on running containers
-sudo docker ps
-
-# check resources
+# Check resources and logs
 sudo docker top CONTAINER
-
-# Check container logs for container dcontain
 sudo docker logs dcontain
-
-# View a running log
 sudo docker logs -ft dcontain
-
-# Push logging to syslog
 sudo docker run --log-driver ="syslog" --name dcontain -d ubuntu /bin/ sh -c "while true; do echo hello world; sleep 1; done"
-
 # On Ubuntu
 sudo tail -f /var/log/syslog
 # On Centos/Redhat
 sudo tail -f /var/log/messages
 
-
 # Docker Hub
-sudo docker login
-sudo docker 
+sudo docker login 
 
-# Create a image in the directory with Dockerfile and verify the image
-sudo docker build -t="tmonte007/basic_web:v1" .
-sudo docker images
-
-# Create a container from the image
-sudo docker run -d -p 80 --name basic_web tmonte007/basic_web:v1 nginx -g "daemon off;"
-
-# This makes port 80 for the contain port 80 for the host
-sudo docker run -d -p 80:80 --name basic_web tmonte007/basic_web:v1 nginx -g "daemon off;"
-
-# Pushing Docker images to Docker Hub
-# You need to be in the directory that has the image
-sudo docker build -t="tmonte007/web" .
-sudo docker push tmonte007/web
-
-# Check docker history
-sudo docker history IMAGE
-
-# Docker has its own network interface docker0  it appears as a normal interface.
-# Docker defaults to 172.16 to 172.30 range
-# You can do ipv6 with --ipv6 when you create an image
-ip addr 
-
-# This will show you the network configuration
-# add -f to only view the ip address
-sudo docker inspect IMAGE
-
-# You can create networks in docker
-# this command creates a network called app
-sudo docker network create app
-
-# This command shows the output
+# Networking the right way without using the docker0 network interface
+sudo docker network create app  # defaults to 172.16 to 172.30
 sudo docker network inspect app
-
-# You can also remove networks
 sudo docker rm app
-
-# You add containers to a network with this command
 sudo docker run -d --net=app --name db jamtur01/redis
-
-# Or connect or disconnect running containers where app is the network and db2 is the container
 sudo docker network connect app db2
 sudo docker network disconnect app db2
 
-# you need dnsutils and iputils-ping to get nslookup and ping
+# Verify networking on Ubuntu
 sudo apt-get -y install dnsutils iptutils-ping
 # dns automatically populates by name and network
 ping db.app
+
+# Volumes
+# -v creates a volume that is on the host system and shared by containers
+# --volumes-from shares a volume from another image
+sudo docker run -v /home/tmonte/dockerbook/code/6/jekyll/james_blog:/data/ --name james_blog2 jamtur01/jekyll
+sudo docker run -d -P --volumes-from james_blog2 jamtur01/apache
