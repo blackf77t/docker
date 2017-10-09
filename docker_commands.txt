@@ -1,3 +1,9 @@
+# Dockerfile commands
+FROM jamtur01/redis   # uses another image as a base
+MAINTAINER Tom Monte <tmonte@gmail.com> 
+ENV REFRESHED_AT 2017-10-09
+ENTRYPOINT [ "/usr/local/bin" ]
+
 # Images
 sudo docker search SEARCH_TERM
 sudo docker build -t="tmonte007/basic_web:v1" .
